@@ -13,7 +13,8 @@ RUN apk update && \
 
 RUN apk add --no-cache git autoconf automake g++ make file
 
-RUN git clone -b v0.7.0 https://github.com/OmniLayer/omnicore.git $BITCOIN_REPO
+RUN wget https://github.com/OmniLayer/omnicore/archive/v0.8.2.zip
+RUN unzip v0.8.2.zip $BITCOIN_REPO
 
 RUN  wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz' && \
     echo '12edc0df75bf9abd7f82f821795bcee50f42cb2e5f76a6a281b85732798364ef  db-4.8.30.NC.tar.gz' | sha256sum -c
@@ -48,17 +49,17 @@ RUN cd $BITCOIN_REPO && \
     strip $BITCOIN_ROOT/lib/libbitcoinconsensus.so.0.0.0 && \
     apk del git autoconf automake g++ make file
 
-FROM alpine:3.8 
+FROM alpine:3.8
 
-LABEL maintainer="Maksym Pugach <pugach.m@gmail.com>, Daniel Zhou <danichau93@gmail.com>, Jack <admin@nightc.com>, Kayuii <577738@qq.com>"
+LABEL maintainer="Harold Whistler <harold.whistler@nutshell.exchange>"
 
-ENV BITCOIN_ROOT=/omnicore 
+ENV BITCOIN_ROOT=/omnicore
 ENV BITCOIN_DATA="${BITCOIN_ROOT}/data" PATH="${BITCOIN_ROOT}/bin:$PATH"
 
 RUN apk update && \
     apk upgrade && \
-    apk add --no-cache libressl boost libevent libtool libzmq 
-    
+    apk add --no-cache libressl boost libevent libtool libzmq
+
 COPY --from=builder ${BITCOIN_ROOT}/bin ${BITCOIN_ROOT}/bin
 COPY --from=builder ${BITCOIN_ROOT}/lib ${BITCOIN_ROOT}/lib
 COPY --from=builder ${BITCOIN_ROOT}/include ${BITCOIN_ROOT}/include
