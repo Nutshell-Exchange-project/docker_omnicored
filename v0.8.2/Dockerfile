@@ -14,7 +14,7 @@ RUN apk update && \
 RUN apk add --no-cache git autoconf automake g++ make file
 
 RUN git clone https://github.com/OmniLayer/omnicore.git $BITCOIN_REPO
-RUN git checkout tags/v0.8.2 -b master
+RUN cd $BITCOIN_REPO && git checkout tags/v0.8.2 -b master && cd ..
 
 RUN  wget 'http://download.oracle.com/berkeley-db/db-4.8.30.NC.tar.gz' && \
     echo '12edc0df75bf9abd7f82f821795bcee50f42cb2e5f76a6a281b85732798364ef  db-4.8.30.NC.tar.gz' | sha256sum -c
