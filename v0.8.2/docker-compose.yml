@@ -16,7 +16,7 @@ services:
 #      - "-printtoconsole"
        - "-regtest=0"
        - "-rest"
-       - "-rpcallowip=10.10.50.5/32"
+       - "-rpcallowip=0/32"
        - "-rpcpassword=test"
        - "-wallet=wallet1"
        - "-rpcport=8333"
