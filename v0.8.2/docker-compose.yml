@@ -1,0 +1,24 @@
+version: '3.6'
+
+services:
+  omniwallet:
+    restart: always
+    image: realnuts/docker_omnicored:v1.0.8.2
+    ports:
+      - "8332:8332"
+      - "8333:8333"
+      - "18332:18332"
+      - "18333:18333"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/omni_data:/omnicore/data
+    command:
+#      - "-printtoconsole"
+       - "-regtest=0"
+       - "-rest"
+       - "-rpcallowip=10.10.50.5/32"
+       - "-rpcpassword=test"
+       - "-wallet=wallet1"
+       - "-rpcport=8333"
+       - "-rpcuser=foo"
+       - "-server"
